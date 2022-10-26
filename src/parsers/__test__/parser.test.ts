@@ -153,6 +153,10 @@ describe('Normalize response data', () => {
 });
 
 describe('Normalize response', () => {
+  it('Maps undefined to undefined', () => {
+    expect(normalizeResponse(undefined)).toBeUndefined();
+  });
+
   describe('Links', () => {
     const response: JsonApiResponse = {
       links: {
@@ -204,8 +208,8 @@ describe('Normalize response', () => {
       const expected: JsonResponse<never> = {
         data: {},
         included: {
-          [response.included![0]!.id]: response.included![0]!,
-          [response.included![1]!.id]: response.included![1]!,
+          '1': { type: 'included-item', id: '1' },
+          '3': { type: 'included-item', id: '3' },
         },
       }
 
@@ -226,6 +230,20 @@ describe('Normalize response', () => {
   })
 
   describe('Parses data consistently with "normalizeResponseData"', () => {
+    // In this implementation, treat a single data object as a data item
+    // array containing a single object.
+    function assertConsistency(response: JsonApiResponse): void {
+      const expected = normalizeResponse(response)?.data;
+
+      const dataArray = Array.isArray(response.data)
+        ? response.data
+        : [response.data];
+
+      const actual = normalizeResponseData(dataArray);
+
+      expect(actual).toEqual(expected);
+    }
+
     it('Handles single data item', () => {
       const response: JsonApiResponse = {
         data: {
@@ -253,20 +271,5 @@ describe('Normalize response', () => {
 
       assertConsistency(response);
     });
-
-    /* In this implementation, treat a single data object as a data item array
-    *  containing a single object.
-    */
-    function assertConsistency(response: JsonApiResponse): void {
-      const expected = normalizeResponse(response).data;
-
-      const dataArray = Array.isArray(response.data)
-        ? response.data
-        : [response.data];
-
-      const actual = normalizeResponseData(dataArray);
-
-      expect(actual).toEqual(expected);
-    }
   })
 });

@@ -67,7 +67,8 @@ describe('Minimal parser: flattenResponseData', () => {
 
       const flatData = flattenResponseData<TEntity & { links: string }>(responseData);
 
-      expect(flatData['links']).toBeUndefined();
+      expect(flatData).toBeTruthy();
+      expect(flatData && flatData['links']).toBeUndefined();
     });
   });
 

@@ -6,11 +6,46 @@ import {
     TEntity,
 } from "../types";
 
+export function normalizeResponseData<T extends TEntity>(
+    responseData: JsonApiDataItem[],
+    includeLinks = false,
+): TDict<T> {
+    const data: TDict<T> = {};
+
+    for (const item of responseData) {
+        const result: any = {
+            type: item.type,
+            id: item.id,
+            ...(item.attributes ?? {})
+        }
+
+        if (includeLinks) {
+            result['links'] = item.links;
+        }
+
+        const relationKeys = Object.keys(item.relationships ?? {});
+
+        for (const key of relationKeys) {
+            if (item.relationships && item.relationships[key] !== undefined) {
+                result[key] = normalizeResponse(item.relationships[key])
+            }
+        }
+
+        data[item.id] = result as T;
+    }
+
+    return data;
+}
+
 export function normalizeResponse<T extends TEntity>(
-    response: JsonApiResponse,
-    includeLinks: boolean = false,
-    includeIncluded: boolean = false
-): JsonResponse<T> {
+    response: JsonApiResponse | undefined,
+    includeLinks = false,
+    includeIncluded = false
+): JsonResponse<T> | undefined {
+    if (response === undefined) {
+        return undefined;
+    }
+
     const dataArray = Array.isArray(response.data)
         ? response.data
         : [response.data];
@@ -24,35 +59,4 @@ export function normalizeResponse<T extends TEntity>(
             ? normalizeResponseData(response.included, includeLinks)
             : undefined,
     };
-}
-
-export function normalizeResponseData<T extends TEntity>(
-    responseData: JsonApiDataItem[],
-    includeLinks: boolean = false,
-): TDict<T> {
-    let data: TDict<T> = {};
-
-    for (const item of responseData) {
-        let result: any = {
-            type: item.type,
-            id: item.id,
-            ...(item.attributes ?? {})
-        }
-
-        if (includeLinks) {
-            result['links'] = item.links;
-        }
-
-        const relationKeys = Object.keys(item.relationships ?? {});
-
-        for (const key of relationKeys) {
-            if (item.relationships && item.relationships[key]) {
-                result[key] = normalizeResponse(item.relationships[key]!)
-            }
-        }
-
-        data[item.id] = result as T;
-    }
-
-    return data;
 }
