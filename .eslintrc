@@ -1,0 +1,26 @@
+{
+    "root": false,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+        // 0 - off
+        // 1 - warn
+        // 2 - error 
+        "no-console": 2,
+        "no-duplicate-imports": 2,
+        "no-self-compare": 2,
+
+        "default-case": 2,
+        "default-case-last": 2,
+
+        // "no-use-before-define": 1,
+        "camelcase": 1
+    }
+}
