@@ -1,5 +1,5 @@
-import { JsonApiDataItem, TDict, TEntity } from "../src/types"
-import { flattenResponseData } from "../src/parsers/minimalParser"
+import { JsonApiDataItem, TDict, TEntity } from "../../types"
+import { flattenResponseData } from "../minimalParser"
 
 describe('Minimal parser: flattenResponseData', () => {
   describe('Single data object', () => {

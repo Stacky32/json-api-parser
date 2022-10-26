@@ -1,10 +1,13 @@
-import { normalizeResponse, normalizeResponseData } from '../src/parsers/parser';
+import {
+  normalizeResponse,
+  normalizeResponseData
+} from '../parser';
 import {
   JsonApiData,
   JsonApiDataItem,
   JsonApiResponse,
   JsonResponse,
-} from '../src/types';
+} from '../../types';
 
 describe('Normalize response data', () => {
   describe('No relationships', () => {
