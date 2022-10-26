@@ -4,6 +4,7 @@
   "description": "Normalise JSON:API responses to strongly typed objects without the 'data' and 'relationships' abstraction.",
   "main": "index.js",
   "scripts": {
+    "prebuild": "if [ -d ./out ]; then rm -frv ./out/; fi",
     "build": "tsc",
     "test": "jest"
   },
