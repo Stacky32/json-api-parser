@@ -2,12 +2,14 @@
     "root": false,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "rules": {
         // 0 - off
@@ -21,6 +23,7 @@
         "default-case-last": 2,
 
         // "no-use-before-define": 1,
-        "camelcase": 1
+        "camelcase": 1,
+        "prettier/prettier": 2
     }
 }
