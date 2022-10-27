@@ -1,5 +1,5 @@
-import { JsonApiDataItem, TDict, TEntity } from "../../types"
-import { flattenResponseData } from "../minimalParser"
+import { JsonApiDataItem, TDict, TEntity } from '../../types';
+import { flattenResponseData } from '../minimalParser';
 
 describe('Minimal parser: flattenResponseData', () => {
   describe('Single data object', () => {
@@ -11,7 +11,7 @@ describe('Minimal parser: flattenResponseData', () => {
         height: '168',
         hair: 'brown',
       },
-    }
+    };
 
     const flatBaseData = {
       type: 'single-data-item',
@@ -19,7 +19,7 @@ describe('Minimal parser: flattenResponseData', () => {
       age: '19',
       height: '168',
       hair: 'brown',
-    }
+    };
 
     it('Picks up id, type and attributes, ignores links', () => {
       const actual = flattenResponseData(baseData);
@@ -40,8 +40,8 @@ describe('Minimal parser: flattenResponseData', () => {
               },
             },
           },
-        }
-      }
+        },
+      };
 
       const expected = {
         ...flatBaseData,
@@ -50,7 +50,7 @@ describe('Minimal parser: flattenResponseData', () => {
           id: '5',
           name: 'New College',
         },
-      }
+      };
 
       const actual = flattenResponseData(responseData);
 
@@ -62,10 +62,12 @@ describe('Minimal parser: flattenResponseData', () => {
         ...baseData,
         links: {
           self: 'link-to-self',
-        }
-      }
+        },
+      };
 
-      const flatData = flattenResponseData<TEntity & { links: string }>(responseData);
+      const flatData = flattenResponseData<TEntity & { links: string }>(
+        responseData
+      );
 
       expect(flatData).toBeTruthy();
       expect(flatData && flatData['links']).toBeUndefined();
@@ -107,7 +109,7 @@ describe('Minimal parser: flattenResponseData', () => {
                 type: 'college',
                 id: '5',
                 attributes: {
-                  name: 'Greenleaf'
+                  name: 'Greenleaf',
                 },
               },
             },
@@ -116,10 +118,10 @@ describe('Minimal parser: flattenResponseData', () => {
       ];
 
       type TResponse = TEntity & {
-        name: string,
-        age: string,
-        college: TEntity & { name: string },
-      }
+        name: string;
+        age: string;
+        college: TEntity & { name: string };
+      };
 
       const expected: TDict<TResponse> = {
         '1': {
@@ -143,8 +145,8 @@ describe('Minimal parser: flattenResponseData', () => {
             id: '5',
             name: 'Greenleaf',
           },
-        }
-      }
+        },
+      };
 
       const actual = flattenResponseData<TResponse>(responseData);
 
@@ -220,7 +222,7 @@ describe('Minimal parser: flattenResponseData', () => {
                 type: 'college',
                 id: '5',
                 attributes: {
-                  name: 'Greenleaf'
+                  name: 'Greenleaf',
                 },
                 relationships: {
                   university: {
@@ -262,21 +264,21 @@ describe('Minimal parser: flattenResponseData', () => {
       ];
 
       type TResponse = TEntity & {
-        name: string,
-        age: string,
+        name: string;
+        age: string;
         college: TEntity & {
-          name: string,
+          name: string;
           university: TEntity & {
-            name: string,
+            name: string;
             country: TEntity & {
-              name: string,
+              name: string;
               continent: TEntity & {
-                name: string,
-              },
-            },
-          },
-        },
-      }
+                name: string;
+              };
+            };
+          };
+        };
+      };
 
       const expected: TDict<TResponse> = {
         '1': {
@@ -300,7 +302,7 @@ describe('Minimal parser: flattenResponseData', () => {
                   type: 'continent',
                   id: '19',
                   name: 'Europe',
-                }
+                },
               },
             },
           },
@@ -326,12 +328,12 @@ describe('Minimal parser: flattenResponseData', () => {
                   type: 'continent',
                   id: '19',
                   name: 'Europe',
-                }
+                },
               },
             },
           },
         },
-      }
+      };
 
       const actual = flattenResponseData<TResponse>(responseData);
 
@@ -354,7 +356,7 @@ describe('Minimal parser: flattenResponseData', () => {
                 name: 'Software Developer',
                 level: 'Junior',
               },
-            }
+            },
           },
           degrees: {
             data: [
@@ -399,20 +401,22 @@ describe('Minimal parser: flattenResponseData', () => {
             ],
           },
         },
-      }
+      };
 
       type TResponse = TEntity & {
-        name: string,
+        name: string;
         career: TEntity & {
-          name: string,
-          level: string,
-        },
-        degrees: TDict<TEntity & {
-          name: string,
-          title: string
-          university: TEntity & { name: string }
-        }>,
-      }
+          name: string;
+          level: string;
+        };
+        degrees: TDict<
+          TEntity & {
+            name: string;
+            title: string;
+            university: TEntity & { name: string };
+          }
+        >;
+      };
 
       const expected: TResponse = {
         type: 'profile',
@@ -434,7 +438,7 @@ describe('Minimal parser: flattenResponseData', () => {
               type: 'university',
               id: '17',
               name: 'University of Bath',
-            }
+            },
           },
           '1': {
             type: 'degree',
@@ -445,10 +449,10 @@ describe('Minimal parser: flattenResponseData', () => {
               type: 'university',
               id: '17',
               name: 'University of Bath',
-            }
+            },
           },
         },
-      }
+      };
 
       const actual = flattenResponseData<TResponse>(responseData);
 

@@ -1,7 +1,4 @@
-import {
-  normalizeResponse,
-  normalizeResponseData
-} from '../parser';
+import { normalizeResponse, normalizeResponseData } from '../parser';
 import {
   JsonApiData,
   JsonApiDataItem,
@@ -31,14 +28,14 @@ describe('Normalize response data', () => {
         {
           type: 'duck',
           id: 'd',
-        }
+        },
       ];
 
       const expected = {
-        'c': { type: 'cat', id: 'c' },
-        'f': { type: 'fox', id: 'f' },
-        'd': { type: 'duck', id: 'd' }
-      }
+        c: { type: 'cat', id: 'c' },
+        f: { type: 'fox', id: 'f' },
+        d: { type: 'duck', id: 'd' },
+      };
 
       const actual = normalizeResponseData(responseData);
 
@@ -53,8 +50,8 @@ describe('Normalize response data', () => {
           attributes: {
             name: 'Jim',
             age: '32',
-            sex: 'M'
-          }
+            sex: 'M',
+          },
         },
         {
           type: 'with-attributes',
@@ -62,9 +59,9 @@ describe('Normalize response data', () => {
           attributes: {
             name: 'Sally',
             age: '23',
-            sex: 'F'
-          }
-        }
+            sex: 'F',
+          },
+        },
       ];
 
       const expected = {
@@ -73,16 +70,16 @@ describe('Normalize response data', () => {
           id: '1',
           name: 'Jim',
           age: '32',
-          sex: 'M'
+          sex: 'M',
         },
         '2': {
           type: 'with-attributes',
           id: '2',
           name: 'Sally',
           age: '23',
-          sex: 'F'
-        }
-      }
+          sex: 'F',
+        },
+      };
 
       const actual = normalizeResponseData(responseData, false);
 
@@ -96,7 +93,7 @@ describe('Normalize response data', () => {
           id: '1',
           links: {
             self: 'link-to-self-1',
-          }
+          },
         },
         {
           type: 'data-item-with-link',
@@ -104,8 +101,8 @@ describe('Normalize response data', () => {
           links: {
             self: 'link-to-self-2',
             previous: 'link-to-self-1',
-          }
-        }
+          },
+        },
       ];
 
       it('Parses links keys if includeLinks is true', () => {
@@ -115,7 +112,7 @@ describe('Normalize response data', () => {
             id: '1',
             links: {
               self: 'link-to-self-1',
-            }
+            },
           },
           '2': {
             type: 'data-item-with-link',
@@ -123,9 +120,9 @@ describe('Normalize response data', () => {
             links: {
               self: 'link-to-self-2',
               previous: 'link-to-self-1',
-            }
-          }
-        }
+            },
+          },
+        };
 
         const actual = normalizeResponseData(responseData, true);
 
@@ -141,14 +138,14 @@ describe('Normalize response data', () => {
           '2': {
             type: 'data-item-with-link',
             id: '2',
-          }
-        }
+          },
+        };
 
         const actual = normalizeResponseData(responseData, false);
 
         expect(actual).toEqual(expected);
       });
-    })
+    });
   });
 });
 
@@ -160,18 +157,18 @@ describe('Normalize response', () => {
   describe('Links', () => {
     const response: JsonApiResponse = {
       links: {
-        'self': 'link-to-self',
-        'next': 'next-page',
-        'last': 'last-page',
+        self: 'link-to-self',
+        next: 'next-page',
+        last: 'last-page',
       },
       data: [],
-    }
+    };
 
     it('Parses links if includeLinks is true', () => {
       const expected: JsonResponse<never> = {
         links: response.links,
         data: {},
-      }
+      };
 
       const actual = normalizeResponse(response, true, false);
 
@@ -180,14 +177,14 @@ describe('Normalize response', () => {
 
     it('Skips links if includeLinks is false', () => {
       const expected: JsonResponse<never> = {
-        data: {}
-      }
+        data: {},
+      };
 
       const actual = normalizeResponse(response, false, false);
 
       expect(actual).toEqual(expected);
-    })
-  })
+    });
+  });
 
   describe('Includes', () => {
     const response: JsonApiResponse = {
@@ -200,9 +197,9 @@ describe('Normalize response', () => {
         {
           type: 'included-item',
           id: '3',
-        }
-      ]
-    }
+        },
+      ],
+    };
 
     it('Parses includes if includeIncluded is true', () => {
       const expected: JsonResponse<never> = {
@@ -211,7 +208,7 @@ describe('Normalize response', () => {
           '1': { type: 'included-item', id: '1' },
           '3': { type: 'included-item', id: '3' },
         },
-      }
+      };
 
       const actual = normalizeResponse(response, false, true);
 
@@ -221,13 +218,13 @@ describe('Normalize response', () => {
     it('Skips includes if includeIncluded is false', () => {
       const expected: JsonResponse<never> = {
         data: {},
-      }
+      };
 
       const actual = normalizeResponse(response, false, false);
 
       expect(actual).toEqual(expected);
-    })
-  })
+    });
+  });
 
   describe('Parses data consistently with "normalizeResponseData"', () => {
     // In this implementation, treat a single data object as a data item
@@ -248,12 +245,12 @@ describe('Normalize response', () => {
       const response: JsonApiResponse = {
         data: {
           type: 'single-data-item',
-          id: '1'
-        }
-      }
+          id: '1',
+        },
+      };
 
       assertConsistency(response);
-    })
+    });
 
     it('Handles data item array', () => {
       const response: JsonApiResponse = {
@@ -264,12 +261,12 @@ describe('Normalize response', () => {
           },
           {
             type: 'multi-item-2',
-            id: '5'
-          }
-        ]
-      }
+            id: '5',
+          },
+        ],
+      };
 
       assertConsistency(response);
     });
-  })
+  });
 });
