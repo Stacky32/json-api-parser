@@ -1,6 +1,7 @@
 {
   "name": "jsonapiparser",
   "version": "1.0.0",
+  "type": "module",
   "description": "Normalise JSON:API responses to strongly typed objects without the 'data' and 'relationships' abstraction.",
   "main": "index.js",
   "scripts": {
