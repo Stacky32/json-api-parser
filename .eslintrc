@@ -18,12 +18,10 @@
         "no-console": 2,
         "no-duplicate-imports": 2,
         "no-self-compare": 2,
-
         "default-case": 2,
         "default-case-last": 2,
-
-        // "no-use-before-define": 1,
         "camelcase": 1,
-        "prettier/prettier": 2
+        "prettier/prettier": 2,
+        "no-unused-vars": 1
     }
 }
