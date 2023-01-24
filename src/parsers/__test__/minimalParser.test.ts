@@ -2,6 +2,10 @@ import { JsonApiDataItem, TEntity } from '../../types';
 import { flattenResponseData } from '../minimalParser';
 
 describe('Minimal parser: flattenResponseData', () => {
+    it('Returns undefined given undefined', () => {
+        expect(flattenResponseData(undefined)).toBeUndefined();
+    });
+
     describe('Single data object', () => {
         const baseData: JsonApiDataItem = {
             type: 'single-data-item',
