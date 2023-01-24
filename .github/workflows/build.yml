@@ -1,0 +1,31 @@
+# Do a clean installation of node packages, run a build,
+# lint and full test run including coverage.
+
+name: Build CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build CI (Node ${{ matrix.node-version }})
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build
+    - run: npm run lint
+    - run: npm run testCoverage
