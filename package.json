@@ -10,7 +10,6 @@
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "testCoverage": "jest --coverage",
     "full-build": "npm run build && npm run lint && npm run test"
   },
   "keywords": [
