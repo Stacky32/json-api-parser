@@ -7,33 +7,39 @@ describe('Minimal parser: flattenResponseData', () => {
     });
 
     describe('Single data object', () => {
-        const baseData: JsonApiDataItem = {
-            type: 'single-data-item',
-            id: '1',
-            attributes: {
+        it('Picks up id, type and attributes, ignores links', () => {
+            const baseData: JsonApiDataItem = {
+                type: 'single-data-item',
+                id: '1',
+                attributes: {
+                    age: '19',
+                    height: '168',
+                    hair: 'brown',
+                },
+            };
+
+            const expected = {
+                type: 'single-data-item',
+                id: '1',
                 age: '19',
                 height: '168',
                 hair: 'brown',
-            },
-        };
+            };
 
-        const flatBaseData = {
-            type: 'single-data-item',
-            id: '1',
-            age: '19',
-            height: '168',
-            hair: 'brown',
-        };
-
-        it('Picks up id, type and attributes, ignores links', () => {
             const actual = flattenResponseData(baseData);
 
-            expect(actual).toEqual(flatBaseData);
+            expect(actual).toEqual(expected);
         });
 
         it('Flattens relationships', () => {
             const responseData = {
-                ...baseData,
+                type: 'single-data-item',
+                id: '1',
+                attributes: {
+                    age: '19',
+                    height: '168',
+                    hair: 'brown',
+                },
                 relationships: {
                     college: {
                         data: {
@@ -44,11 +50,16 @@ describe('Minimal parser: flattenResponseData', () => {
                             },
                         },
                     },
+                    career: undefined,
                 },
             };
 
             const expected = {
-                ...flatBaseData,
+                type: 'single-data-item',
+                id: '1',
+                age: '19',
+                height: '168',
+                hair: 'brown',
                 college: {
                     type: 'college',
                     id: '5',
@@ -63,7 +74,8 @@ describe('Minimal parser: flattenResponseData', () => {
 
         it('Ignores links', () => {
             const responseData = {
-                ...baseData,
+                type: 'single-data-item',
+                id: '1',
                 links: {
                     self: 'link-to-self',
                 },
@@ -84,10 +96,6 @@ describe('Minimal parser: flattenResponseData', () => {
                 {
                     type: 'student',
                     id: '1',
-                    attributes: {
-                        name: 'Izzy',
-                        age: '22',
-                    },
                     relationships: {
                         college: {
                             data: {
@@ -98,15 +106,12 @@ describe('Minimal parser: flattenResponseData', () => {
                                 },
                             },
                         },
+                        career: undefined,
                     },
                 },
                 {
                     type: 'student',
                     id: '2',
-                    attributes: {
-                        name: 'Tom',
-                        age: '28',
-                    },
                     relationships: {
                         college: {
                             data: {
@@ -122,8 +127,6 @@ describe('Minimal parser: flattenResponseData', () => {
             ];
 
             type TResponse = TEntity & {
-                name: string;
-                age: string;
                 college: TEntity & { name: string };
             };
 
@@ -131,8 +134,6 @@ describe('Minimal parser: flattenResponseData', () => {
                 '1': {
                     type: 'student',
                     id: '1',
-                    name: 'Izzy',
-                    age: '22',
                     college: {
                         type: 'college',
                         id: '4',
@@ -142,8 +143,6 @@ describe('Minimal parser: flattenResponseData', () => {
                 '2': {
                     type: 'student',
                     id: '2',
-                    name: 'Tom',
-                    age: '28',
                     college: {
                         type: 'college',
                         id: '5',

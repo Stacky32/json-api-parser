@@ -1,8 +1,11 @@
 import { JsonApiData, TEntity } from '../types';
 
 /* A minimal parser which flattens attributes and relationships, while ignoring links
- *  and included keys.
+ * and included keys.
+ *
+ * TODO: Add in links and includes.
  */
+
 export function flattenResponseData<T extends TEntity>(
     responseData: JsonApiData | undefined
 ): T | Record<string, T> | undefined {
@@ -21,11 +24,9 @@ export function flattenResponseData<T extends TEntity>(
             };
 
             for (const key in item.relationships) {
-                if (item.relationships[key] && item.relationships[key]?.data) {
-                    result[key] = flattenResponseData<TEntity>(
-                        item.relationships[key]?.data
-                    );
-                }
+                result[key] = flattenResponseData<TEntity>(
+                    item.relationships[key]?.data
+                );
             }
 
             flatData[item.id] = result as T;
@@ -40,14 +41,9 @@ export function flattenResponseData<T extends TEntity>(
         };
 
         for (const key in responseData.relationships) {
-            if (
-                responseData.relationships[key] &&
+            flatData[key] = flattenResponseData<TEntity>(
                 responseData.relationships[key]?.data
-            ) {
-                flatData[key] = flattenResponseData<TEntity>(
-                    responseData.relationships[key]?.data
-                );
-            }
+            );
         }
 
         return flatData as T;

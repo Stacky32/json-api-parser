@@ -100,3 +100,26 @@ export const fullResponse: JsonApiResponse = {
         },
     ],
 };
+
+export const minimalResponse: JsonApiResponse = {
+    data: [
+        {
+            type: 'articles',
+            id: '1',
+            attributes: {
+                title: 'JSON:API paints my bikeshed!',
+            },
+            relationships: {
+                author: {
+                    data: { type: 'people', id: '9' },
+                },
+                comments: {
+                    data: [
+                        { type: 'comments', id: '5' },
+                        { type: 'comments', id: '12' },
+                    ],
+                },
+            },
+        },
+    ],
+};

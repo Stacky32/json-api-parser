@@ -10,7 +10,7 @@
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "full-build": "npm run build && npm run lint && npm run test"
+    "full-build": "npm run build && npm run lint && npm run test -- --coverage"
   },
   "keywords": [
     "API",

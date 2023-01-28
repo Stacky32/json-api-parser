@@ -1,3 +1,5 @@
+// TODO Implement the Json:API document structure in types
+
 export type TEntity = {
     type: string;
     id: string;
@@ -6,7 +8,7 @@ export type TEntity = {
 export type JsonApiDataItem = TEntity &
     Partial<{
         attributes: Record<string, string>;
-        relationships: Record<string, JsonApiResponse>;
+        relationships: Record<string, JsonApiResponse | undefined>;
         links: Record<string, string>;
     }>;
 
