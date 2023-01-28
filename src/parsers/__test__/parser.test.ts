@@ -1,5 +1,5 @@
 import { JsonApiDataItem, TEntity } from '../../types';
-import { flattenResponseData } from '../minimalParser';
+import { flattenResponseData } from '../parser';
 
 describe('Minimal parser: flattenResponseData', () => {
     it('Returns undefined given undefined', () => {
