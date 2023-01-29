@@ -91,7 +91,6 @@ const trans = {
     },
 };
 
-/* eslint-disable */
-type S = Paths<typeof trans>;
-type T = Leaves<typeof trans.c.e>;
-type U = AttributePaths<typeof trans>;
+export type S = Paths<typeof trans>;
+export type T = Leaves<typeof trans.c.e>;
+export type U = AttributePaths<typeof trans>;

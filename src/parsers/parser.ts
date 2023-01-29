@@ -1,4 +1,4 @@
-import { JsonApiData, TEntity } from '../types';
+import { JsonApiData, TEntity } from '../types/types';
 
 /* A minimal parser which flattens attributes and relationships, while ignoring links
  * and included keys.

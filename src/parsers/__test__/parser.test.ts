@@ -1,4 +1,4 @@
-import { JsonApiDataItem, TEntity } from '../../types';
+import { JsonApiDataItem, TEntity } from '../../types/types';
 import { flattenResponseData } from '../parser';
 
 describe('Minimal parser: flattenResponseData', () => {

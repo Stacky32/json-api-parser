@@ -1,4 +1,4 @@
-import { JsonApiResponse } from '../../types';
+import { JsonApiResponse } from '../../types/types';
 
 // Simplest valid response
 export const emptyResponse: JsonApiResponse = {
