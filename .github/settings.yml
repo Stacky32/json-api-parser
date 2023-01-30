@@ -3,7 +3,7 @@ repository:
   description: "Utilities for parsing and flattening responses from a JSON:API standard web API "
   private: false
   has_projects: false
-  has_wiki: false
+  has_wiki: true
 
   default_branch: main
   delete_branch_on_merge: false
