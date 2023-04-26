@@ -21,8 +21,8 @@
   "author": "Tom Crawley",
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^29.5.0",
     "eslint": "^8.39.0",
+    "@types/jest": "^29.5.1",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "eslint-config-prettier": "^8.8.0",
