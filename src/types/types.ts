@@ -56,7 +56,7 @@ type Prev = [
     18,
     19,
     20,
-    ...0[]
+    ...0[],
 ];
 
 type Paths<T, D extends number = 10> = [D] extends [never]
