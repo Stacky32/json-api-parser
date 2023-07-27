@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Normalise JSON:API responses to strongly typed objects without the 'data' and 'relationships' abstraction.",
   "main": "index.js",
+  "engines": {
+    "node": "16.x || 18.17.0 || 20.5.0"
+  },
   "scripts": {
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write --no-error-on-unmatched-pattern",
     "prebuild": "if [ -d ./out ]; then rm -frv ./out/; fi; npm install",
