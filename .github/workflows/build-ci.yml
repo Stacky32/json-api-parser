@@ -1,25 +1,29 @@
 # Do a clean installation of node packages, run a build,
 # lint and full test run including coverage.
 
-name: Build
+name: Build CI
 
 on:
   workflow_dispatch:
-    inputs:
-      node-version:
-        type: string
-        required: true
-        description: Node version
+  pull_request:
+  push:
+    branches: [ "main" ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [16.x, 18.17.0]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases
+
     steps:
     - uses: actions/checkout@v3
-    - name: Build (Node ${{ inputs.node-version }})
+    - name: Build CI (Node ${{ matrix.node-version }})
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
     - run: npm run build
