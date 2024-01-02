@@ -1,4 +1,6 @@
-# JSON:API Parser
+# JSON:API Parser (Archived)
+
+## This repository is now archived.
 
 Utilities for parsing responses in the [JSON:API](https://jsonapi.org/) format.
 JSON:API gives a standard for the structure of  API responses such that there are 'data' keys with an 
